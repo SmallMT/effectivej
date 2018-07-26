@@ -1,7 +1,9 @@
 package com.mt.effective.exception;
 
+
 /**
- * 第60条  优先使用标志的异常
+ * @author mt
+ * 第60条  优先使用标准的异常
  *   代码的复用是肯定值得提倡的,异常也不例外.
  *   如果java标准类库中的现有异常能够满足需求的话,就不要再自定义异常了.
  * 优先使用已有的标准异常
@@ -19,5 +21,38 @@ package com.mt.effective.exception;
  *
  */
 public class Notice60 {
+    public static void main(String[] args) {
+        DataList dataList = new DataList(5);
+        dataList.getInteger(10);
+    }
 
+}
+class DataList {
+
+    public int[] datas;
+
+    public DataList(int size){
+        datas = new int[size];
+    }
+
+    public Integer getInteger(int index){
+        if (index < 0 || index > datas.length) {
+            //这里使用自定义的异常来进行数组下标越界检查,也能够实现
+            //但是这个自定义的异常不被大多数API调用者熟悉
+            //使用ArrayIndexOutOfBoundsException同样可以处理,而且这个异常的含义
+            //也被广泛的理解
+            //所以优先使用java类库中的标准异常(在能满足需求的前提下)
+            throw new IndexOutOfDataListBoundException("数组下标越界");
+        }
+        return datas[index];
+    }
+
+}
+
+class IndexOutOfDataListBoundException extends RuntimeException {
+    public IndexOutOfDataListBoundException(){}
+
+    public IndexOutOfDataListBoundException(String msg){
+        super(msg);
+    }
 }
