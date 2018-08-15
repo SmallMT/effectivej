@@ -6,6 +6,7 @@ package com.mt.effective.classandinterface;
  * 在共有类中使用访问方法而非共有域
  * 典型的例子就是javabean
  * 还是为了解耦
+ * 总之,共有类永远都不应该暴露可变的域
  */
 public class Notice14 {
 
